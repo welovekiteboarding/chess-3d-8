@@ -1,0 +1,64 @@
+Linear issue C38-9: Create the 3D chess web app scaffold
+
+Description: Graph task: chess-001
+
+Kind: code
+
+Create the initial web app project for a browser-based 3D chess game. Use a modern frontend stack suitable for 3D rendering, typed code, and testability. Include a clean project structure, package scripts, linting, formatting, and a minimal home screen.
+
+Acceptance criteria:
+
+* The app can be installed from a clean checkout with one package-manager command
+* The app can run locally in development mode
+* The app has a minimal landing/game shell route
+* The project includes lint, test, and build scripts
+* The README documents setup and local run commands
+
+In scope: package.json, package-lock.json, README.md, index.html, vite.config.ts, tsconfig.json, tsconfig.app.json, tsconfig.node.json, eslint.config.js, prettier.config.js, .prettierrc, src, public
+
+Validation commands:
+
+* npm install
+* npm run lint
+* npm run test -- --run
+* npm run build
+
+Symphony finalization owns the full validation run after the worker returns.
+During the worker turn, use these as focused post-change checks only if time remains.
+
+Previous attempt failed:
+Issue: C38-8
+Category: worker_execution
+Stage: worker_execution
+Reason: {:command_failed, "codex exec", 1, "zsh:1: read-only variable: status"}
+
+Task kind: code
+Graph task: chess-001
+Acceptance criteria:
+- The app can be installed from a clean checkout with one package-manager command
+- The app can run locally in development mode
+- The app has a minimal landing/game shell route
+- The project includes lint, test, and build scripts
+- The README documents setup and local run commands
+In scope: package.json, package-lock.json, README.md, index.html, vite.config.ts, tsconfig.json, tsconfig.app.json, tsconfig.node.json, eslint.config.js, prettier.config.js, .prettierrc, src, public
+Validation commands:
+- npm install
+- npm run lint
+- npm run test -- --run
+- npm run build
+Previous attempt failed:
+Issue: C38-8
+Category: worker_execution
+Stage: worker_execution
+Reason: {:command_failed, "codex exec", 1, "zsh:1: read-only variable: status"}
+
+Worker execution contract:
+- Implement the requested file and code changes before running validation commands.
+- Do not preflight package managers or diagnose validation tooling before implementation.
+- Treat validation commands as post-change checks, not as starting instructions.
+- Symphony finalization will run required validation commands after the worker returns.
+- Run focused checks while implementing, but do not spend the task window debugging the full validation suite.
+- If full validation fails late in the turn or exposes dependency/toolchain mismatch, capture the exact command and error, then return the implemented workspace so Symphony can finalize or retry with that evidence.
+- When introducing dependencies for any stack, choose stable mutually compatible releases, update the manifest and lockfile, and avoid unconstrained latest versions for tightly-coupled toolchains.
+
+Implement the issue and leave the workspace ready for review.
